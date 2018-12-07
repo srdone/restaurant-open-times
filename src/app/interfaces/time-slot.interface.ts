@@ -1,11 +1,10 @@
 export interface TimeSlot {
   weekday: number;
-  start: {
-    hour: number;
-    minutes: number;
-  };
-  end: {
-    hour: number;
-    minutes: number;
-  };
+  start: TimeBoundary;
+  end: TimeBoundary;
+}
+
+export interface TimeBoundary {
+  hour: number;
+  minute: number;
 }
