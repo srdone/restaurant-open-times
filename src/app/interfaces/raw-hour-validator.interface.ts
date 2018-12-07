@@ -1,3 +1,5 @@
+import { RawHours } from './raw-hours.interface';
+
 export interface RawHourValidator {
-  validate: (string) => boolean;
+  validate: (rawHours: RawHours) => boolean;
 }
