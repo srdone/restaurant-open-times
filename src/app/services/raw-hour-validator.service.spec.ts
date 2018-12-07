@@ -118,6 +118,13 @@ describe('RawHourValidatorService', () => {
       } as any);
 
       expect(result).toBe(false);
+
+      result = service.validate({
+        name: 'Osakaya Restaurant',
+        times: ['Mon-Tue 11 am - 9 pm Fri-Sat 11:30 am - 9:30 pm', 'Fri-Sat 11:30 am - 9:30 pm']
+      } as any);
+
+      expect(result).toBe(false);
     });
   });
 });
