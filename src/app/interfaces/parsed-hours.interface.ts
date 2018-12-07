@@ -1,6 +1,6 @@
 import { TimeSlot } from './time-slot.interface';
 
-export interface RestaurantHours {
+export interface ParsedHours {
   name: string;
   times: TimeSlot[];
 }

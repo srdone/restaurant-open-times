@@ -1,17 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 
-import { OpenTimesParserService } from './open-times-parser.service';
+import { RawHourParserService } from './raw-hour-parser.service';
 
-describe('OpenTimesParserService', () => {
+describe('RawHourParserService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: OpenTimesParserService = TestBed.get(OpenTimesParserService);
+    const service: RawHourParserService = TestBed.get(RawHourParserService);
     expect(service).toBeTruthy();
   });
 
   it('should have a parse method', () => {
-    const service: OpenTimesParserService = TestBed.get(OpenTimesParserService);
+    const service: RawHourParserService = TestBed.get(RawHourParserService);
     expect(service.parse).toEqual(jasmine.any(Function));
   });
 });
