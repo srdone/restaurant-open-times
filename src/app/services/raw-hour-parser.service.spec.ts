@@ -47,6 +47,56 @@ describe('RawHourParserService', () => {
       });
     });
 
+    it('should parse noon correctly', () => {
+      const result = service.parse({
+        name: 'A Test Restaurant',
+        times: ['Tue 12 pm - 10 pm']
+      });
+
+      expect(result).toEqual({
+        name: 'A Test Restaurant',
+        times: [
+          {
+            weekday: 2,
+            start: {
+              hour: 12,
+              minute: 0
+            },
+            end: {
+              hour: 22,
+              minute: 0
+            }
+          }
+        ],
+        rawTimes: ['Tue 12 pm - 10 pm']
+      });
+    });
+
+    it('should parse midnight correctly', () => {
+      const result = service.parse({
+        name: 'A Test Restaurant',
+        times: ['Tue 12 am - 10 pm']
+      });
+
+      expect(result).toEqual({
+        name: 'A Test Restaurant',
+        times: [
+          {
+            weekday: 2,
+            start: {
+              hour: 0,
+              minute: 0
+            },
+            end: {
+              hour: 22,
+              minute: 0
+            }
+          }
+        ],
+        rawTimes: ['Tue 12 am - 10 pm']
+      });
+    });
+
     it('should parse a timeslot with only hours', () => {
       const result = service.parse({
         name: 'A Test Restaurant',

@@ -111,7 +111,7 @@ export class RawHourParserService implements RawHourParser {
     let hour = time.includes(':') ? +time.split(':')[0] : +time.split(' ')[0];
     const minute = time.includes(':') ? +time.split(':')[1].split(' ')[0] : 0;
 
-    if (time.includes('pm')) {
+    if (time.includes('pm') && hour < 12) {
       hour += 12;
     } else if (time.includes('am') && hour === 12) {
       hour = 0;
