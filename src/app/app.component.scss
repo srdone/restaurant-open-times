@@ -1,19 +1,50 @@
 :host {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  min-height: 100%;
+}
+
+input.ng-invalid {
+  border-color: red;
 }
 
 .time-selection__container {
+  padding: 12px;
   display: flex;
+  height: 135px;
+  min-height: 135px;
   flex-direction: row;
+  justify-content: space-around;
+}
+
+.restaurant-list__header {
+  flex-basis: 0;
+  padding: 0 12px;
+  font-weight: 300;
 }
 
 .restaurant-list__container {
+  flex-basis: 1;
+  overflow-y: scroll;
+  border-top: 1px solid black;
 }
 
-.restaurant-list__card {
+.restaurant-card {
   display: block;
-  border: grey;
+  margin: 8px;
+  padding: 8px;
+  border: 1px solid black;
   border-width: 1px;
   border-radius: 3px;
+}
+
+.restaurant-card__name {
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.restaurant-card__open-hours {
+  font-weight: 300;
+  font-size: 12px;
 }

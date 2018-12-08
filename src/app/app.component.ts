@@ -18,7 +18,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   selectedDate: NgbDateStruct;
   selectedTime: NgbTimeStruct;
-  openRestaurants: Observable<ParsedHours[]>;
+  openRestaurants$: Observable<ParsedHours[]>;
+  displayDate$: Observable<string>;
 
   constructor(
     private restaurants: RestaurantsService
@@ -42,11 +43,20 @@ export class AppComponent implements OnInit, OnDestroy {
     this.selectDate$ = new BehaviorSubject(this.selectedDate);
     this.selectTime$ = new BehaviorSubject(this.selectedTime);
 
-    this.openRestaurants = combineLatest(this.selectDate$, this.selectTime$)
+    const selectedMoment = combineLatest(this.selectDate$, this.selectTime$)
       .pipe(
-        map(([date, time]) => moment(new Date(date.year, date.month - 1, date.day, time.hour, time.minute))),
+        map(([date, time]) => moment(new Date(date.year, date.month - 1, date.day, time.hour, time.minute)))
+      );
+
+    this.openRestaurants$ = selectedMoment
+      .pipe(
         switchMap(time => this.restaurants.getOpenRestaurants$(time)),
       );
+
+    this.displayDate$ = selectedMoment
+        .pipe(
+          map(time => time.format('dddd, MMMM Do YYYY, h:mm a'))
+        );
   }
 
   ngOnDestroy() {

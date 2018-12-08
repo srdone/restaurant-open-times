@@ -1,14 +1,30 @@
 <div class="time-selection__container">
-  <div>
-      <ngb-datepicker [(ngModel)]="selectedDate" (select)="onDateSelect($event)"></ngb-datepicker>
-  </div>
-  <div>
-    <ngb-timepicker [ngModel]="selectedTime" (ngModelChange)="onTimeSelect($event)" meridian="true" ></ngb-timepicker>
-  </div>
+  <form class="form-inline">
+    <div class="form-group">
+      <div class="input-group">
+        <input name="datepicker" required class="form-control" placeholder="yyyy-mm-dd" (ngModelChange)="onDateSelect($event)" [ngModel]="selectedDate" ngbDatepicker #datepicker="ngbDatepicker">
+        <div class="input-group-append">
+          <button class="btn btn-primary" (click)="datepicker.toggle()" type="button">
+            <i class="fa fa-calendar"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <ngb-timepicker required name="timepicker" [ngModel]="selectedTime" (ngModelChange)="onTimeSelect($event)" meridian="true"></ngb-timepicker>
+</div>
+
+<div class="restaurant-list__header">
+  Open Restaurants for {{displayDate$ | async}}
 </div>
 
 <div class="restaurant-list__container">
-  <div class="restaurant-list__card" *ngFor="let restaurant of openRestaurants | async">
-    <h3>{{restaurant.name}}</h3>
+  <div class="restaurant-card" *ngFor="let restaurant of openRestaurants$ | async">
+    <div class="restaurant-card__name">{{restaurant.name}}</div>
+    <div class="restaurant-card__open-hours">
+      <span *ngFor="let time of restaurant.rawTimes; let i = index">
+        {{time}}{{(i + 1) < restaurant.rawTimes.length ? ', ' : ''}}
+      </span>
+    </div>
   </div>
 </div>
