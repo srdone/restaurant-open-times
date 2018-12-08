@@ -14,7 +14,7 @@
   <ngb-timepicker required name="timepicker" [ngModel]="selectedTime" (ngModelChange)="onTimeSelect($event)" meridian="true"></ngb-timepicker>
 </div>
 
-<ng-container *ngIf="(openRestaurants$ | async) as restaurants; else loading">
+<ng-container *ngIf="(openRestaurants$ | async) as restaurants; else loadingOrError">
   <ng-container *ngIf="restaurants.length">
     <div class="restaurant-list__header">
       Open Restaurants for {{(displayDate$ | async).value}}
@@ -32,21 +32,22 @@
     </div>
   </ng-container>
 
-  <ng-container *ngIf="!restaurants.length">
-    <div class="restaurant-list__header" *ngIf="(displayDate$ | async) as displayDate">
-      <span *ngIf="!!displayDate.value">
-        No restaurants open for {{ displayDate.value }}
-      </span>
-      <span *ngIf="!!displayDate.error" class="restaurant-list__header__error-text">
-        {{ displayDate.error }}
-      </span>
+  <ng-container *ngIf="!restaurants.length && (displayDate$ | async) as displayDate">
+    <div class="restaurant-list__header" *ngIf="!!displayDate.value">
+      No restaurants open for {{ displayDate.value }}
+    </div>
+    <div *ngIf="!!displayDate.error" class="restaurant-list__header header--error">
+      {{ displayDate.error }}
     </div>
   </ng-container>
 </ng-container>
 
-<ng-template #loading>
-  <div class="restaurant-list__header">
+<ng-template #loadingOrError>
+  <div *ngIf="!restaurantsError" class="restaurant-list__header">
     Loading restaurants...
   </div>
-  <div class="restaurant-list__container"></div>
+  <div *ngIf="!!restaurantsError" class="restaurant-list__header header--error">
+    Error loading restaurants:<br/>
+    {{restaurantsError}}
+  </div>
 </ng-template>

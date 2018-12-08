@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { combineLatest, Observable, BehaviorSubject, of } from 'rxjs';
+import { combineLatest, Observable, BehaviorSubject, of, throwError } from 'rxjs';
 import { RestaurantsService } from './services/restaurants.service';
 import { NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, catchError } from 'rxjs/operators';
 import * as moment from 'moment';
 import { ParsedHours } from './interfaces';
 
@@ -17,7 +17,7 @@ export class AppComponent implements OnInit, OnDestroy {
   selectedTime: NgbTimeStruct;
   openRestaurants$: Observable<ParsedHours[]>;
   displayDate$: Observable<{value?: string, error?: string}>;
-  error: string;
+  restaurantsError: string;
 
   private selectDate$: BehaviorSubject<NgbDateStruct>;
   private selectTime$: BehaviorSubject<NgbTimeStruct>;
@@ -63,6 +63,15 @@ export class AppComponent implements OnInit, OnDestroy {
           }
           return of([]);
         }),
+        catchError(err => {
+          // generally, performing side effects in observables is bad practice
+          // here it is saving us from having to handle unsubscribing manually
+          // from the subscription because the async pipe handles that automatically
+          // if we wanted to handle this in the catch callback of the subscription
+          // we would have to subscribe and unsubscribe manually
+          this.restaurantsError = err;
+          return throwError(err);
+        })
       );
 
     this.displayDate$ = selectedMoment
