@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Moment } from 'moment';
-import { Observable, from, throwError } from 'rxjs';
-import { map, switchMap, reduce, filter } from 'rxjs/operators';
+import { Observable, from, throwError, of } from 'rxjs';
+import { map, switchMap, reduce, filter, flatMap } from 'rxjs/operators';
 import { RawHourValidatorService } from './raw-hour-validator.service';
 import { RawHourParserService } from './raw-hour-parser.service';
 import { JsonRawHoursGetterService } from './json-raw-hours-getter.service';
@@ -30,11 +30,11 @@ export class RestaurantsService {
     return this.getter.get()
       .pipe(
         switchMap(rawHours => from(rawHours)),
-        map(rawHour => {
+        flatMap(rawHour => {
           if (!this.validator.validate(rawHour)) {
-            throw new Error(`Invalid data structure: ${JSON.stringify(rawHour)}`);
+            return throwError(`Invalid data structure: ${JSON.stringify(rawHour)}`);
           }
-          return rawHour;
+          return of(rawHour);
         }),
         map(rawHour => this.parser.parse(rawHour)),
         filter((parsedHour: ParsedHours) => this.isOpen.isOpen(time, parsedHour.times)),

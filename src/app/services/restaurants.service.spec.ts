@@ -76,7 +76,7 @@ describe('RestaurantsService integration tests', () => {
         () => {},
         err => {
           expect(err).toBeDefined();
-          expect(err.message).toEqual('Invalid data structure: {"name":"Thai Stick Restaurant","times":["Mon- 11 am - 1 am"]}');
+          expect(err).toEqual('Invalid data structure: {"name":"Thai Stick Restaurant","times":["Mon- 11 am - 1 am"]}');
         }
       );
 
