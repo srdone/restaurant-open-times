@@ -119,6 +119,96 @@ describe('RawHourParserService', () => {
       });
     });
 
+    it('should parse a timeslot with Sunday at the end in a day range', () => {
+      const result = service.parse({
+        name: 'Bombay Indian Restaurant',
+        times: ['Mon-Sun 11:30 am - 10:30 pm']
+      });
+
+      expect(result).toEqual({
+        name: 'Bombay Indian Restaurant',
+        times: [
+          {
+            weekday: 1,
+            start: {
+              hour: 11,
+              minute: 30
+            },
+            end: {
+              hour: 22,
+              minute: 30
+            }
+          },
+          {
+            weekday: 2,
+            start: {
+              hour: 11,
+              minute: 30
+            },
+            end: {
+              hour: 22,
+              minute: 30
+            }
+          },
+          {
+            weekday: 3,
+            start: {
+              hour: 11,
+              minute: 30
+            },
+            end: {
+              hour: 22,
+              minute: 30
+            }
+          },
+          {
+            weekday: 4,
+            start: {
+              hour: 11,
+              minute: 30
+            },
+            end: {
+              hour: 22,
+              minute: 30
+            }
+          },
+          {
+            weekday: 5,
+            start: {
+              hour: 11,
+              minute: 30
+            },
+            end: {
+              hour: 22,
+              minute: 30
+            }
+          },
+          {
+            weekday: 6,
+            start: {
+              hour: 11,
+              minute: 30
+            },
+            end: {
+              hour: 22,
+              minute: 30
+            }
+          },
+          {
+            weekday: 0,
+            start: {
+              hour: 11,
+              minute: 30
+            },
+            end: {
+              hour: 22,
+              minute: 30
+            }
+          }
+        ]
+      });
+    });
+
     it('should parse a timeslot that is only at the beginning of the day', () => {
       const result = service.parse({
         name: 'A Test Restaurant',

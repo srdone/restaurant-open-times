@@ -9,7 +9,7 @@ import * as _ from 'lodash';
 export class RawHourParserService implements RawHourParser {
 
   private DAYS_REGEX = /((?:Mon|Tue|Wed|Thu|Fri|Sat|Sun){1}-?(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)?(?:, (?:Mon|Tue|Wed|Thu|Fri|Sat|Sun))?)/;
-  private DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  private DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   private TIME_REGEX = /((?:[0-9][0-9]?){1}:?(?:[0-9][0-9]?)? (?:am|pm) - (?:[0-9][0-9]?){1}:?(?:[0-9][0-9]?)? (?:am|pm))/;
 
   constructor() {
@@ -66,7 +66,7 @@ export class RawHourParserService implements RawHourParser {
     return _(dayRanges)
       .flatMap((t) => {
         if (!t.includes('-')) {
-          return [this.DAYS.indexOf(t)];
+          return [this.DAYS.indexOf(t) === 6 ? 0 : this.DAYS.indexOf(t) + 1];
         }
 
         [startDay, endDay] = t.split('-');
@@ -74,7 +74,7 @@ export class RawHourParserService implements RawHourParser {
         endDayIdx = this.DAYS.indexOf(endDay);
 
         for (let i = startDayIdx; i <= endDayIdx; i++) {
-          days.push(i);
+          days.push(i === 6 ? 0 : i + 1);
         }
         return days;
       })

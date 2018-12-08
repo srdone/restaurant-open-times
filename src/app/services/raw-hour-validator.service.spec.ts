@@ -18,9 +18,18 @@ describe('RawHourValidatorService', () => {
     });
 
     it('should return true if it is a valid raw hour object', () => {
-      const result = service.validate({
+      let result: boolean;
+
+      result = service.validate({
         name: 'Osakaya Restaurant',
         times: ['Mon-Thu, Sun 11:30 am - 9 pm', 'Fri-Sat 11:30 am - 9:30 pm']
+      });
+
+      expect(result).toBe(true);
+
+      result = service.validate({
+        name: 'Bombay Indian Restaurant',
+        times: ['Mon-Sun 11:30 am - 10:30 pm']
       });
 
       expect(result).toBe(true);

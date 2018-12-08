@@ -9,7 +9,7 @@ export class RawHourValidatorService implements RawHourValidator {
 
   // tslint:disable-next-line:max-line-length
   private RAW_TIME_REGEX = /^((?:Mon|Tue|Wed|Thu|Fri|Sat|Sun){1}(?:-(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun))?(?:, (?:Mon|Tue|Wed|Thu|Fri|Sat|Sun))? (?:[0-9][0-9]?){1}:?(?:[0-9][0-9]?)? (?:am|pm) - (?:[0-9][0-9]?){1}:?(?:[0-9][0-9]?)? (?:am|pm))$/;
-  private DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  private DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   private DAY_GROUP_REGEX = /((?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)-(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun))/g;
 
   constructor() {
