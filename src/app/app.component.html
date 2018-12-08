@@ -14,17 +14,39 @@
   <ngb-timepicker required name="timepicker" [ngModel]="selectedTime" (ngModelChange)="onTimeSelect($event)" meridian="true"></ngb-timepicker>
 </div>
 
-<div class="restaurant-list__header">
-  Open Restaurants for {{displayDate$ | async}}
-</div>
+<ng-container *ngIf="(openRestaurants$ | async) as restaurants; else loading">
+  <ng-container *ngIf="restaurants.length">
+    <div class="restaurant-list__header">
+      Open Restaurants for {{(displayDate$ | async).value}}
+    </div>
 
-<div class="restaurant-list__container">
-  <div class="restaurant-card" *ngFor="let restaurant of openRestaurants$ | async">
-    <div class="restaurant-card__name">{{restaurant.name}}</div>
-    <div class="restaurant-card__open-hours">
-      <span *ngFor="let time of restaurant.rawTimes; let i = index">
-        {{time}}{{(i + 1) < restaurant.rawTimes.length ? ', ' : ''}}
+    <div class="restaurant-list__container">
+      <div class="restaurant-card" *ngFor="let restaurant of restaurants">
+        <div class="restaurant-card__name">{{restaurant.name}}</div>
+        <div class="restaurant-card__open-hours">
+          <span *ngFor="let time of restaurant.rawTimes; let i = index">
+            {{time}}{{(i + 1) < restaurant.rawTimes.length ? ', ' : ''}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!restaurants.length">
+    <div class="restaurant-list__header" *ngIf="(displayDate$ | async) as displayDate">
+      <span *ngIf="!!displayDate.value">
+        No restaurants open for {{ displayDate.value }}
+      </span>
+      <span *ngIf="!!displayDate.error" class="restaurant-list__header__error-text">
+        {{ displayDate.error }}
       </span>
     </div>
+  </ng-container>
+</ng-container>
+
+<ng-template #loading>
+  <div class="restaurant-list__header">
+    Loading restaurants...
   </div>
-</div>
+  <div class="restaurant-list__container"></div>
+</ng-template>

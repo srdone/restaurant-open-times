@@ -9,6 +9,10 @@ input.ng-invalid {
   border-color: red;
 }
 
+ngb-timepicker.ng-invalid ::ng-deep input {
+  border-color: red;
+}
+
 .time-selection__container {
   padding: 12px;
   display: flex;
@@ -22,6 +26,10 @@ input.ng-invalid {
   flex-basis: 0;
   padding: 0 12px;
   font-weight: 300;
+}
+
+.restaurant-list__header__error-text {
+  color: red;
 }
 
 .restaurant-list__container {

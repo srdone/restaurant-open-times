@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subject, combineLatest, Observable, BehaviorSubject } from 'rxjs';
+import { combineLatest, Observable, BehaviorSubject, of } from 'rxjs';
 import { RestaurantsService } from './services/restaurants.service';
 import { NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { map, switchMap } from 'rxjs/operators';
@@ -13,13 +13,14 @@ import { ParsedHours } from './interfaces';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  private selectDate$: BehaviorSubject<NgbDateStruct>;
-  private selectTime$: BehaviorSubject<NgbTimeStruct>;
-
   selectedDate: NgbDateStruct;
   selectedTime: NgbTimeStruct;
   openRestaurants$: Observable<ParsedHours[]>;
-  displayDate$: Observable<string>;
+  displayDate$: Observable<{value?: string, error?: string}>;
+  error: string;
+
+  private selectDate$: BehaviorSubject<NgbDateStruct>;
+  private selectTime$: BehaviorSubject<NgbTimeStruct>;
 
   constructor(
     private restaurants: RestaurantsService
@@ -45,17 +46,35 @@ export class AppComponent implements OnInit, OnDestroy {
 
     const selectedMoment = combineLatest(this.selectDate$, this.selectTime$)
       .pipe(
-        map(([date, time]) => moment(new Date(date.year, date.month - 1, date.day, time.hour, time.minute)))
+        map(([date, time]) => {
+          if (!date || !time) {
+            // no proper date/time selected, create invalid date for later error handling
+            return moment.invalid();
+          }
+          return moment(new Date(date.year, date.month - 1, date.day, time.hour, time.minute));
+        })
       );
 
     this.openRestaurants$ = selectedMoment
       .pipe(
-        switchMap(time => this.restaurants.getOpenRestaurants$(time)),
+        switchMap(time => {
+          if (time.isValid()) {
+            return this.restaurants.getOpenRestaurants$(time);
+          }
+          return of([]);
+        }),
       );
 
     this.displayDate$ = selectedMoment
         .pipe(
-          map(time => time.format('dddd, MMMM Do YYYY, h:mm a'))
+          map(time => {
+            if (time.isValid()) {
+              return {
+                value: time.format('dddd, MMMM Do YYYY [at] h:mm a')
+              };
+            }
+            return { error: 'Invalid date or time selected. Please select a valid date and time.' };
+          })
         );
   }
 
