@@ -4,3 +4,11 @@ body {
   height: 100%;
   box-sizing: border-box;
 }
+
+ngb-timepicker.ng-invalid input {
+  border-color: red;
+}
+
+input.ng-invalid {
+  border-color: red;
+}
