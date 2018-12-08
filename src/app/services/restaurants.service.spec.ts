@@ -47,8 +47,31 @@ describe('RestaurantsService integration tests', () => {
       expect(req.request.method).toBe('GET');
       req.flush(allRestaurantData);
     }));
+
+    it('should emit an error if there is an improperly formatted value retrieved', () => {
+      const testTime = moment(new Date(2018, 11, 3, 11, 0));
+
+      service.getOpenRestaurants$(testTime).subscribe(
+        () => {},
+        err => {
+          expect(err).toBeDefined();
+          expect(err.message).toEqual('Invalid data structure: {"name":"Thai Stick Restaurant","times":["Mon- 11 am - 1 am"]}');
+        }
+      );
+
+      const req = httpMock.expectOne('assets/data/rest_hours.json');
+      expect(req.request.method).toBe('GET');
+      req.flush(badRestaurantData);
+    });
   });
 });
+
+const badRestaurantData = [
+  {
+    'name': 'Thai Stick Restaurant',
+    'times': ['Mon- 11 am - 1 am']
+  }
+];
 
 const allRestaurantData = [
   {

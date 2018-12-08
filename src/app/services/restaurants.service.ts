@@ -18,7 +18,9 @@ export class RestaurantsService {
     @Inject(RawHourValidatorService) private validator: RawHourValidator,
     @Inject(RawHourParserService) private parser: RawHourParser,
     private isOpen: IsOpenService
-  ) { }
+  ) {
+    this.getOpenRestaurants$ = this.getOpenRestaurants$.bind(this);
+  }
 
   /**
    * Returns an observable that emits a single array of restaurants with open hours
