@@ -40,6 +40,14 @@ export class IsOpenService {
           return testMinute >= start.minute && testMinute <= end.minute;
         }
       }
+      if (this.flowsIntoNextDay(openTime) && weekday === testWeekday) {
+        if (testHour > start.hour) {
+          return true;
+        }
+        if (testHour === start.hour) {
+          return testMinute >= start.minute;
+        }
+      }
       if (this.flowsIntoNextDay(openTime) && (weekday + 1) === testWeekday) {
         if (testHour < end.hour) {
           return true;
