@@ -25,7 +25,8 @@ export class RawHourParserService implements RawHourParser {
   parse(rawHours: RawHours): ParsedHours {
     return {
       name: rawHours.name,
-      times: _(rawHours.times).flatMap(this.parseTime).value()
+      times: _(rawHours.times).flatMap(this.parseTime).value(),
+      rawTimes: rawHours.times
     };
   }
 

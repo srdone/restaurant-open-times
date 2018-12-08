@@ -19,6 +19,11 @@ export class RestaurantsService {
     @Inject(RawHourParserService) private parser: RawHourParser,
     private isOpen: IsOpenService
   ) { }
+
+  /**
+   * Returns an observable that emits a single array of restaurants with open hours
+   * @param time - the time to check for open restaurants
+   */
   getOpenRestaurants$(time: Moment): Observable<ParsedHours[]> {
     return this.getter.get()
       .pipe(

@@ -43,7 +43,8 @@ describe('RawHourParserService', () => {
               minute: 0
             }
           }
-        ]
+        ],
+        rawTimes: ['Mon 11:30 am - 9 pm']
       });
     });
 
@@ -67,7 +68,8 @@ describe('RawHourParserService', () => {
               minute: 0
             }
           }
-        ]
+        ],
+        rawTimes: ['Mon 11 am - 9 pm']
       });
     });
 
@@ -91,7 +93,8 @@ describe('RawHourParserService', () => {
               minute: 9
             }
           }
-        ]
+        ],
+        rawTimes: ['Mon 11:11 am - 9:09 pm']
       });
     });
 
@@ -115,7 +118,8 @@ describe('RawHourParserService', () => {
               minute: 9
             }
           }
-        ]
+        ],
+        rawTimes: ['Mon 8:11 am - 9:09 am']
       });
     });
 
@@ -125,7 +129,7 @@ describe('RawHourParserService', () => {
         times: ['Mon-Sun 11:30 am - 10:30 pm']
       });
 
-      expect(result).toEqual({
+      expect(result).toEqual(jasmine.objectContaining({
         name: 'Bombay Indian Restaurant',
         times: [
           {
@@ -206,7 +210,7 @@ describe('RawHourParserService', () => {
             }
           }
         ]
-      });
+      }));
     });
 
     it('should parse a timeslot that is only at the beginning of the day', () => {
@@ -229,7 +233,8 @@ describe('RawHourParserService', () => {
               minute: 9
             }
           }
-        ]
+        ],
+        rawTimes: ['Mon 12:00 am - 9:09 am']
       });
     });
 
@@ -253,7 +258,8 @@ describe('RawHourParserService', () => {
               minute: 59
             }
           }
-        ]
+        ],
+        rawTimes: ['Mon 12:00 am - 11:59 pm']
       });
     });
 
@@ -277,7 +283,8 @@ describe('RawHourParserService', () => {
               minute: 0
             }
           }
-        ]
+        ],
+        rawTimes: ['Mon 12:00 am - 12:00 am']
       });
     });
 
@@ -301,7 +308,8 @@ describe('RawHourParserService', () => {
               minute: 0
             }
           }
-        ]
+        ],
+        rawTimes: ['Mon 2 am - 1 am']
       });
     });
 
@@ -369,7 +377,8 @@ describe('RawHourParserService', () => {
               minute: 0
             }
           }
-        ]
+        ],
+        rawTimes: ['Mon-Fri 11:30 am - 9 pm']
       });
     });
 
@@ -415,7 +424,8 @@ describe('RawHourParserService', () => {
               minute: 0
             }
           }
-        ]
+        ],
+        rawTimes: ['Mon-Tue, Sat 11:30 am - 9 pm']
       });
     });
 
