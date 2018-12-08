@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, combineLatest, Observable, BehaviorSubject } from 'rxjs';
 import { RestaurantsService } from './services/restaurants.service';
 import { NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import * as moment from 'moment';
 import { ParsedHours } from './interfaces';
 
@@ -44,11 +44,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.openRestaurants = combineLatest(this.selectDate$, this.selectTime$)
       .pipe(
-        tap(console.log),
         map(([date, time]) => moment(new Date(date.year, date.month - 1, date.day, time.hour, time.minute))),
-        tap(time => console.log(time.day(), time.hour())),
         switchMap(time => this.restaurants.getOpenRestaurants$(time)),
-        tap(console.log)
       );
   }
 
@@ -58,13 +55,11 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onDateSelect(date) {
-    console.log(date);
     this.selectedDate = date;
     this.selectDate$.next(date);
   }
 
   onTimeSelect(time) {
-    console.log(time);
     this.selectedTime = time;
     this.selectTime$.next(time);
   }
