@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
 import { RawHourParserService } from './raw-hour-parser.service';
-import { TimeSlot } from '../interfaces';
 
 describe('RawHourParserService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
