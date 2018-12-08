@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:gh-pages": "ng build --prod --base-href \"https://srdone.github.io/restaurant-open-times/\"",
+    "deploy": "yarn build:gh-pages && npx ngh --dir=dist/restaurant-open-times",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
