@@ -8,7 +8,7 @@ import { RawHours } from '../interfaces';
 export class RawHourValidatorService implements RawHourValidator {
 
   // tslint:disable-next-line:max-line-length
-  private RAW_TIME_REGEX = /^((?:Mon|Tue|Wed|Thu|Fri|Sat|Sun){1}(?:-(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun))?(?:, (?:Mon|Tue|Wed|Thu|Fri|Sat|Sun))? (?:[0-9][0-9]?){1}:?(?:[0-9][0-9]?)? (?:am|pm) - (?:[0-9][0-9]?){1}:?(?:[0-9][0-9]?)? (?:am|pm))$/;
+  private RAW_TIME_REGEX = /^((?:Mon|Tue|Wed|Thu|Fri|Sat|Sun){1}(?:-(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun))?(?:, (?:Mon|Tue|Wed|Thu|Fri|Sat|Sun){1}(?:-(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun))?)? (?:[0-9][0-9]?){1}:?(?:[0-9][0-9]?)? (?:am|pm) - (?:[0-9][0-9]?){1}:?(?:[0-9][0-9]?)? (?:am|pm))$/;
   private DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   private DAY_GROUP_REGEX = /((?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)-(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun))/g;
 
@@ -16,6 +16,11 @@ export class RawHourValidatorService implements RawHourValidator {
     this.validate = this.validate.bind(this);
   }
 
+  /**
+   * Validates every raw hours object to make sure it has the proper structure
+   * and that the times strings are properly formatted for the parser
+   * @param rawHours - a raw hours object to validate
+   */
   validate(rawHours: RawHours): boolean {
     // must have a name
     if (!rawHours.name) {

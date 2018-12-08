@@ -33,6 +33,20 @@ describe('RawHourValidatorService', () => {
       });
 
       expect(result).toBe(true);
+
+      result = service.validate({
+        name: 'A-1 Cafe Restaurant',
+        times: ['Mon, Wed-Sun 11 am - 10 pm']
+      });
+
+      expect(result).toBe(true);
+
+      result = service.validate({
+        name: 'Cesario\'s',
+        times: ['Mon-Thu, Sun 11:30 am - 10 pm', 'Fri-Sat 11:30 am - 10:30 pm']
+      });
+
+      expect(result).toBe(true);
     });
 
     it('should return false if it is missing a name', () => {
