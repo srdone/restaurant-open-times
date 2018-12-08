@@ -8,14 +8,19 @@
 .time-selection__container {
   padding: 12px;
   display: flex;
-  height: 135px;
   min-height: 135px;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-around;
 }
 
+@media screen and (max-device-width : 466px) {
+  .time-selection__container {
+    min-height: 185px;
+  }
+}
+
 .restaurant-list__header {
-  flex-basis: 0;
   padding: 0 12px;
   font-weight: 300;
 
