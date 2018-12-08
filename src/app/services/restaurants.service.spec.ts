@@ -48,6 +48,27 @@ describe('RestaurantsService integration tests', () => {
       req.flush(allRestaurantData);
     }));
 
+    it('should emit a list of open restaurants given the time passed in on a different day', async(() => {
+      const testTime = moment(new Date(2018, 11, 4, 11, 0));
+
+      service.getOpenRestaurants$(testTime).subscribe(openRestaurants => {
+        expect(openRestaurants.length).toBe(7);
+        expect(openRestaurants.map(r => r.name)).toEqual([
+          'Thai Stick Restaurant',
+          'Sabella & La Torre',
+          'Tong Palace',
+          'India Garden Restaurant',
+          'Sapporo-Ya Japanese Restaurant',
+          'Santorini\'s Mediterranean Cuisine',
+          'Kyoto Sushi'
+        ]);
+      });
+
+      const req = httpMock.expectOne('assets/data/rest_hours.json');
+      expect(req.request.method).toBe('GET');
+      req.flush(allRestaurantData);
+    }));
+
     it('should emit an error if there is an improperly formatted value retrieved', () => {
       const testTime = moment(new Date(2018, 11, 3, 11, 0));
 
