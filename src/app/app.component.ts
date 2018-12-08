@@ -27,6 +27,11 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {
   }
 
+  /**
+   * Handles initialization of the component. A lifecycle hook called automatically by Angular.
+   * Initializes component with current date and time, sets up observables for later subscription
+   * to be handled by the async pipe in the template
+   */
   ngOnInit() {
     const currentDate = moment();
     this.selectedDate = {
@@ -87,17 +92,28 @@ export class AppComponent implements OnInit, OnDestroy {
         );
   }
 
+  /**
+   * Handles destruction of the component. A lifecycle hook called automatically by Angular.
+   */
   ngOnDestroy() {
     // no need to unsubscribe here because the async pipe
     // handles subscribe and unsubscribe automatically
   }
 
-  onDateSelect(date) {
+  /**
+   * Handles new selected date
+   * @param date - the new date
+   */
+  onDateSelect(date: NgbDateStruct) {
     this.selectedDate = date;
     this.selectDate$.next(date);
   }
 
-  onTimeSelect(time) {
+  /**
+   * Handles new selected time
+   * @param time - the new time
+   */
+  onTimeSelect(time: NgbTimeStruct) {
     this.selectedTime = time;
     this.selectTime$.next(time);
   }

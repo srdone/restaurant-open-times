@@ -1,4 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+@import "colors";
+@import "~bootstrap/scss/bootstrap";
+
 html,
 body {
   height: 100%;
@@ -6,9 +9,9 @@ body {
 }
 
 ngb-timepicker.ng-invalid input {
-  border-color: red;
+  border-color: $error-border;
 }
 
 input.ng-invalid {
-  border-color: red;
+  border-color: $error-border;
 }

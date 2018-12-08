@@ -1,3 +1,5 @@
+@import "../colors";
+
 :host {
   display: flex;
   flex-direction: column;
@@ -25,7 +27,7 @@
   font-weight: 300;
 
   &.header--error {
-    color: red;
+    color: $error-text;
   }
 }
 
@@ -33,14 +35,14 @@
   flex-basis: 1;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-  border-top: 1px solid black;
+  border-top: 1px solid $border;
 }
 
 .restaurant-card {
   display: block;
   margin: 8px;
   padding: 8px;
-  border: 1px solid black;
+  border: 1px solid $border;
   border-width: 1px;
   border-radius: 3px;
 }

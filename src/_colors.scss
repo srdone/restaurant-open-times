@@ -1,0 +1,15 @@
+// Custom colors
+$border: #666666;
+$error-text: #c33214;
+$error-border: $error-text;
+$error-background: #89250B;
+$interaction-background: #0C6877;
+
+// Bootstrap overrides
+$body-bg: #f7f7f7;
+$body-color: #393939;
+
+$theme-colors: (
+  "primary": $interaction-background,
+  "danger": $error-background
+);

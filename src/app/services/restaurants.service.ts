@@ -14,6 +14,10 @@ import { IsOpenService } from './is-open.service';
 export class RestaurantsService {
 
   constructor(
+    // Using the interface type on the injections below to show how it could be used
+    // if one wished to change out implementations under the hood
+    // without using Angular's override feature in their DI Container:
+    // { provide: SomeClass, useClass: SomeOverridingClass }
     @Inject(JsonRawHoursGetterService) private getter: RawHoursGetter,
     @Inject(RawHourValidatorService) private validator: RawHourValidator,
     @Inject(RawHourParserService) private parser: RawHourParser,
