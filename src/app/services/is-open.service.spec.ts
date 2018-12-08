@@ -90,6 +90,35 @@ describe('IsOpenService', () => {
       expect(result).toBe(true);
     });
 
+    it('should return true if the current time is on a day other than the first time listed but is still on one day', () => {
+      const result = service.isOpen(moment(new Date(2018, 11, 4, 21, 0)), [
+        {
+          weekday: 1,
+          start: {
+            hour: 11,
+            minute: 30
+          },
+          end: {
+            hour: 21,
+            minute: 0
+          }
+        },
+        {
+          weekday: 2,
+          start: {
+            hour: 11,
+            minute: 30
+          },
+          end: {
+            hour: 21,
+            minute: 0
+          }
+        }
+      ]);
+
+      expect(result).toBe(true);
+    });
+
     it('should return false if the current time is just after the end of the open time', () => {
       const result = service.isOpen(moment(new Date(2018, 11, 3, 21, 1)), [
         {

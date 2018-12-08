@@ -19,45 +19,52 @@ export class IsOpenService {
    * @param openTimes - the list of open times to test the testTime agains
    */
   isOpen(testTime: Moment, openTimes: TimeSlot[]): boolean {
+    return openTimes.some(t => this.testOpenTime(testTime, t));
+  }
+
+  /**
+   * Takes a test time and an open time and returns whether the test time
+   * occurs during the open time
+   * @param testTime - the time to see if the open time includes
+   * @param openTime - the open time to test against
+   */
+  private testOpenTime(testTime: Moment, openTime: TimeSlot): boolean {
     const testWeekday = testTime.day();
     const testHour = testTime.hour();
     const testMinute = testTime.minute();
 
-    for (let i = 0; i < openTimes.length; i++) {
-      const openTime = openTimes[i];
-      const { weekday, start, end } = openTimes[i];
-      if (weekday === testWeekday) {
-        if (testHour > start.hour && testHour < end.hour) {
-          return true;
-        }
-        if (testHour > start.hour && testHour === end.hour) {
-          return testMinute <= end.minute;
-        }
-        if (testHour === start.hour && testHour < end.hour) {
-          return testMinute >= start.minute;
-        }
-        if (testHour === start.hour && testHour === end.hour) {
-          return testMinute >= start.minute && testMinute <= end.minute;
-        }
+    const { weekday, start, end } = openTime;
+    if (weekday === testWeekday) {
+      if (testHour > start.hour && testHour < end.hour) {
+        return true;
       }
-      if (this.flowsIntoNextDay(openTime) && weekday === testWeekday) {
-        if (testHour > start.hour) {
-          return true;
-        }
-        if (testHour === start.hour) {
-          return testMinute >= start.minute;
-        }
+      if (testHour > start.hour && testHour === end.hour) {
+        return testMinute <= end.minute;
       }
-      if (this.flowsIntoNextDay(openTime) && (weekday + 1) === testWeekday) {
-        if (testHour < end.hour) {
-          return true;
-        }
-        if (testHour === end.hour) {
-          return testMinute <= end.minute;
-        }
+      if (testHour === start.hour && testHour < end.hour) {
+        return testMinute >= start.minute;
       }
-      return false;
+      if (testHour === start.hour && testHour === end.hour) {
+        return testMinute >= start.minute && testMinute <= end.minute;
+      }
     }
+    if (this.flowsIntoNextDay(openTime) && weekday === testWeekday) {
+      if (testHour > start.hour) {
+        return true;
+      }
+      if (testHour === start.hour) {
+        return testMinute >= start.minute;
+      }
+    }
+    if (this.flowsIntoNextDay(openTime) && (weekday + 1) === testWeekday) {
+      if (testHour < end.hour) {
+        return true;
+      }
+      if (testHour === end.hour) {
+        return testMinute <= end.minute;
+      }
+    }
+    return false;
   }
 
   /**
