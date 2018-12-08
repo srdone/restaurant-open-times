@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { RawHourValidatorService } from './raw-hour-validator.service';
+import { RawHours } from '../interfaces';
 
 describe('RawHourValidatorService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
@@ -148,6 +149,12 @@ describe('RawHourValidatorService', () => {
       } as any);
 
       expect(result).toBe(false);
+    });
+
+    it('should return true for all data in rest_hours.json', () => {
+      const restHours: RawHours[] = require('../../assets/data/rest_hours.json');
+
+      restHours.forEach(hour => expect(service.validate(hour)).toBe(true));
     });
   });
 });
