@@ -32,6 +32,7 @@
 .restaurant-list__container {
   flex-basis: 1;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   border-top: 1px solid black;
 }
 
