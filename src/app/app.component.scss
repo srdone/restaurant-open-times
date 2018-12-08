@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.time-selection__container {
+  display: flex;
+  flex-direction: row;
+}
+
+.restaurant-list__container {
+}
+
+.restaurant-list__card {
+  display: block;
+  border: grey;
+  border-width: 1px;
+  border-radius: 3px;
+}
