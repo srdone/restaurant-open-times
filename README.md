@@ -4,6 +4,25 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Important Notes
 
+### Description
+
+This project takes raw time slots representing open restaurant times in a specific
+string format, parses them and tests to see which restaurants are open given any
+date and time specified. A number of edge cases had to be considered:
+
+* Some time slots include hours from the following day. For example, a restaurant may
+open on Saturday at 3pm and close on Sunday at 1:30 am
+* How to handle overflowing time slots (see above) that flowed from the last to the first
+day of the week
+* How to handle parsing the specific date format, which had some irregularities including:
+  * multiple days listed for the same slot, with a range of days and possibly one more day separated by a comma
+  * Some hours not including minutes
+  * Some time slots starting on the listed day and ending the following morning
+* How to ensure that all of the data was valid before it passed through the parsing engine. Each time slot had to:
+  * Include a week day only once
+  * Never have a day span starting at the end of a week and ending in the next week
+  * Follow a specific time format which could exclude minutes but had to specify am/pm
+
 ### Live Project
 
 A live version of this project is available on [github pages](https://srdone.github.io/restaurant-open-times).

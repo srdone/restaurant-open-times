@@ -34,6 +34,9 @@ export class IsOpenService {
     const testMinute = testTime.minute();
 
     const { weekday, start, end } = openTime;
+    // account for all cases where the time slot being tested
+    // is on the same weekday as the time being tested
+    // and the time slot does not flow into the next day
     if (weekday === testWeekday) {
       if (testHour > start.hour && testHour < end.hour) {
         return true;
@@ -48,6 +51,8 @@ export class IsOpenService {
         return testMinute >= start.minute && testMinute <= end.minute;
       }
     }
+    // account for cases where there is no end time during the same day
+    // because the time slot flows into the next day
     if (this.flowsIntoNextDay(openTime) && weekday === testWeekday) {
       if (testHour > start.hour) {
         return true;
@@ -56,6 +61,9 @@ export class IsOpenService {
         return testMinute >= start.minute;
       }
     }
+    // account for cases where the time being tested is on the day after the
+    // current time slot being compared but the current time slot includes time
+    // from the day after the current time slot
     if (this.flowsIntoNextDay(openTime) && ((weekday + 1) === testWeekday)) {
       if (testHour < end.hour) {
         return true;
@@ -64,6 +72,9 @@ export class IsOpenService {
         return testMinute <= end.minute;
       }
     }
+    // account for cases where the time being tested is on Sunday and the
+    // current time slot being compared is on Saturday but includes time from
+    // Sunday because it flows into the day after the day listed in the time slot
     if (this.flowsIntoNextDay(openTime) && (weekday + 1 === 7) && (testWeekday === 0)) {
       if (testHour < end.hour) {
         return true;
