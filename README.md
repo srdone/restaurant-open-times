@@ -23,21 +23,21 @@ day of the week
   * Never have a day span starting at the end of a week and ending in the next week
   * Follow a specific time format which could exclude minutes but had to specify am/pm
 
+#### Responsiveness
+
+This project has basic responsiveness built in - it should display fine on both desktops and phones, including
+momentum scrolling on iPhone.
+
+#### Colors
+
+I'm clearly not a designer - I've overridden scss color defaults in bootstrap as an example of how to do it,
+not an example of my ability to choose colors :)
+
 ### Live Project
 
 A live version of this project is available on [github pages](https://srdone.github.io/restaurant-open-times).
 
 To publish an updated version run `yarn deploy`
-
-### Responsiveness
-
-This project has basic responsiveness built in - it should display fine on both desktops and phones, including
-momentum scrolling on iPhone.
-
-### Colors
-
-I'm clearly not a designer - I've overridden scss color defaults in bootstrap as an example of how to do it,
-not an example of my ability to choose colors :)
 
 ### Development server
 
