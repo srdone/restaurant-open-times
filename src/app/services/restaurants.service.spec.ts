@@ -82,7 +82,7 @@ describe('RestaurantsService integration tests', () => {
 
       const req = httpMock.expectOne('assets/data/rest_hours.json');
       expect(req.request.method).toBe('GET');
-      req.flush(restaurantsOpenIntoSundayMorning);
+      req.flush(includingRestaurantsOpenIntoSundayMorning);
     });
 
     it('should emit an error if there is an improperly formatted value retrieved', () => {
@@ -110,7 +110,7 @@ const badRestaurantData = [
   }
 ];
 
-const restaurantsOpenIntoSundayMorning = [
+const includingRestaurantsOpenIntoSundayMorning = [
   {
     'name': 'Sudachi',
     'times': ['Mon-Wed 5 pm - 12:30 am', 'Thu-Fri 5 pm - 1:30 am', 'Sat 3 pm - 1:30 am', 'Sun 3 pm - 11:30 pm']
@@ -118,7 +118,11 @@ const restaurantsOpenIntoSundayMorning = [
   {
     'name': 'Sabella & La Torre',
     'times': ['Mon-Thu, Sun 10 am - 10:30 pm', 'Fri-Sat 10 am - 12:30 am']
-  }
+  },
+  {
+    'name': 'Santorini\'s Mediterranean Cuisine',
+    'times': ['Mon-Sun 8 am - 10:30 pm']
+  },
 ];
 
 const allRestaurantData = [
