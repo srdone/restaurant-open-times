@@ -15,7 +15,7 @@ open on Saturday at 3pm and close on Sunday at 1:30 am
 * How to handle overflowing time slots (see above) that flowed from the last to the first
 day of the week
 * How to handle parsing the specific date format, which had some irregularities including:
-  * multiple days listed for the same slot, with a range of days and possibly one more day separated by a comma
+  * Most slots had multiple days listed for the same time range, with a range of days and possibly one more day separated by a comma
   * Some hours not including minutes
   * Some time slots starting on the listed day and ending the following morning
 * How to ensure that all of the data was valid before it passed through the parsing engine. Each time slot had to:
