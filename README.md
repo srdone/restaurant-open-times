@@ -33,6 +33,8 @@ momentum scrolling on iPhone.
 I'm clearly not a designer - I've overridden scss color defaults in bootstrap as an example of how to do it,
 not an example of my ability to choose colors :)
 
+## Setup, Testing, and Deployment
+
 ### Live Project
 
 A live version of this project is available on [github pages](https://srdone.github.io/restaurant-open-times).
