@@ -191,6 +191,25 @@ describe('IsOpenService', () => {
       expect(result).toBe(true);
     });
 
+    it(`should return true if an open time extends to the next day and the testTime is on
+    the next day before the end of the open time and the next day is a sunday`, () => {
+      const result = service.isOpen(moment(new Date(2018, 11, 9, 0, 30)), [
+        {
+          weekday: 6,
+          start: {
+            hour: 11,
+            minute: 30
+          },
+          end: {
+            hour: 1,
+            minute: 30
+          }
+        }
+      ]);
+
+      expect(result).toBe(true);
+    });
+
     it(`should return false if an open time extends to the next day and the testTime
       is on that day just after the end of the open time`, () => {
       const result = service.isOpen(moment(new Date(2018, 11, 4, 0, 31)), [

@@ -69,6 +69,22 @@ describe('RestaurantsService integration tests', () => {
       req.flush(allRestaurantData);
     }));
 
+    it('should emit the restaurants that are open from Saturday into early Sunday morning', () => {
+      const testTime = moment(new Date(2018, 11, 9, 0, 30));
+
+      service.getOpenRestaurants$(testTime).subscribe(openRestaurants => {
+        expect(openRestaurants.length).toBe(2);
+        expect(openRestaurants.map(r => r.name)).toEqual([
+          'Sudachi',
+          'Sabella & La Torre'
+        ]);
+      });
+
+      const req = httpMock.expectOne('assets/data/rest_hours.json');
+      expect(req.request.method).toBe('GET');
+      req.flush(restaurantsOpenIntoSundayMorning);
+    });
+
     it('should emit an error if there is an improperly formatted value retrieved', () => {
       const testTime = moment(new Date(2018, 11, 3, 11, 0));
 
@@ -91,6 +107,17 @@ const badRestaurantData = [
   {
     'name': 'Thai Stick Restaurant',
     'times': ['Mon- 11 am - 1 am']
+  }
+];
+
+const restaurantsOpenIntoSundayMorning = [
+  {
+    'name': 'Sudachi',
+    'times': ['Mon-Wed 5 pm - 12:30 am', 'Thu-Fri 5 pm - 1:30 am', 'Sat 3 pm - 1:30 am', 'Sun 3 pm - 11:30 pm']
+  },
+  {
+    'name': 'Sabella & La Torre',
+    'times': ['Mon-Thu, Sun 10 am - 10:30 pm', 'Fri-Sat 10 am - 12:30 am']
   }
 ];
 

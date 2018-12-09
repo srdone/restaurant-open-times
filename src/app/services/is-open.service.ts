@@ -56,7 +56,7 @@ export class IsOpenService {
         return testMinute >= start.minute;
       }
     }
-    if (this.flowsIntoNextDay(openTime) && (weekday + 1) === testWeekday) {
+    if (this.flowsIntoNextDay(openTime) && ((weekday + 1) === testWeekday) || ((weekday + 1 === 7) && (testWeekday === 0))) {
       if (testHour < end.hour) {
         return true;
       }
